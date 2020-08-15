@@ -1,0 +1,4 @@
+const baseURL = 'https://disease.sh/v3/covid-19/';
+const globalSummaryURL = 'all?allowNull=true&yesterday=';
+const OK_RESPONSE = 200;
+// all?yesterday=true&allowNull=true
