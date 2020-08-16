@@ -7,8 +7,8 @@ class ApiClient {
 
   ApiClient({this.client}) : assert(client != null);
 
-  Future<Map<String, dynamic>> fetchJson(String endPoint) async {
-    final url = '$baseURL/$endPoint';
+  Future<dynamic> fetchJson(String endPoint) async {
+    final url = '$baseURL$endPoint';
     final resp = await client.get(url);
 
     if (resp.statusCode != OK_RESPONSE) {

@@ -1,0 +1,54 @@
+import 'package:equatable/equatable.dart';
+
+class Country extends Equatable {
+  final String name;
+  final int cases,
+      todayDeaths,
+      todayCases,
+      deaths,
+      recovered,
+      todayRecovered,
+      active,
+      critical;
+  final DateTime updated;
+
+  const Country({
+    this.name,
+    this.cases,
+    this.todayDeaths,
+    this.todayCases,
+    this.deaths,
+    this.recovered,
+    this.todayRecovered,
+    this.active,
+    this.critical,
+    this.updated,
+  });
+
+  factory Country.fromJson(Map<String, dynamic> json) => Country(
+        name: json['country'],
+        cases: json['cases'],
+        updated: DateTime.fromMillisecondsSinceEpoch(json['updated']),
+        todayCases: json['todayCases'],
+        deaths: json['deaths'],
+        todayDeaths: json['todayDeaths'],
+        recovered: json['recovered'],
+        todayRecovered: json['todayRecovered'],
+        active: json['active'],
+        critical: json['critical'],
+      );
+
+  @override
+  List<Object> get props => [
+        name,
+        cases,
+        todayDeaths,
+        todayCases,
+        deaths,
+        recovered,
+        todayRecovered,
+        active,
+        critical,
+        updated
+      ];
+}
