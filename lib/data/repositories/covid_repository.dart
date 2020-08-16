@@ -36,8 +36,15 @@ class CovidRepository {
   }
 
   Future<List<Country>> getCountries() async {
+    List<Country> toReturn = [];
+
     final json = await _client.fetchJson(countriesSummaryURL);
-    return json.values.map((e) => Country.fromJson(e)).toList();
+    final data = List<Map<String, dynamic>>.from(json);
+
+    data.forEach((e) {
+      toReturn.add(Country.fromJson(e));
+    });
+    return toReturn;
   }
 
   Future<List<Continent>> getContinents() async {

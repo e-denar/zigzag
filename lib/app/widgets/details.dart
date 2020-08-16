@@ -9,9 +9,10 @@ import 'package:zigzag/domain/entities/country.dart';
 import 'package:zigzag/domain/blocs/selected_country_bloc.dart';
 
 class Details extends StatefulWidget {
-  const Details({this.continents, this.selected});
+  const Details({this.continents, this.selected, this.offset});
   final List<Continent> continents;
   final int selected;
+  final offset;
   @override
   _DetailsState createState() => _DetailsState();
 }
@@ -28,7 +29,7 @@ class _DetailsState extends State<Details> {
     bloc.fetchCountries();
     _stream = bloc.countries;
     _continents = widget.continents;
-
+    _scrollController = ScrollController(initialScrollOffset: widget.offset);
     selectionBloc = Provider.of<SelectedCountryBloc>(context, listen: false);
   }
 
@@ -51,6 +52,7 @@ class _DetailsState extends State<Details> {
                   return Container(
                     padding: const EdgeInsets.only(top: 20),
                     child: ListView.builder(
+                      controller: _scrollController,
                       shrinkWrap: true,
                       itemCount: _continents.length,
                       itemBuilder: (context, continentIndex) => Column(
@@ -106,6 +108,12 @@ class _DetailsState extends State<Details> {
         onPressed: () => _changeTheme(target.country.name),
       ),
       title: Text(target.country.name),
+      trailing: ConstrainedBox(
+          constraints: BoxConstraints(maxHeight: 40, maxWidth: 60),
+          child: Image.network(
+            target.country.flag,
+            scale: 6,
+          )),
       children: [
         ChangeSummary(
           cases: target.country.casesIncreasedBy,
@@ -118,12 +126,6 @@ class _DetailsState extends State<Details> {
     Draggable _tile = LongPressDraggable<TileIdentifier>(
       data: target,
       child: _widget,
-      childWhenDragging: Expanded(
-        child: Container(
-          color: Colors.black.withOpacity(0.2),
-          child: _widget,
-        ),
-      ),
       feedback: Material(
         child: Container(
           padding: const EdgeInsets.all(20),

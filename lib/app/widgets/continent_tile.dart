@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:zigzag/domain/entities/continent.dart';
 
 import 'change_summary.dart';
-import 'change_view_widget.dart';
 
 class ContinentTile extends StatelessWidget {
   final Continent continent;

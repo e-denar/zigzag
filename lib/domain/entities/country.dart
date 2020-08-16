@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 
 class Country extends Equatable {
-  final String name;
+  final String name, flag;
   final int cases,
       todayDeaths,
       todayCases,
@@ -12,18 +12,18 @@ class Country extends Equatable {
       critical;
   final DateTime updated;
 
-  const Country({
-    this.name,
-    this.cases,
-    this.todayDeaths,
-    this.todayCases,
-    this.deaths,
-    this.recovered,
-    this.todayRecovered,
-    this.active,
-    this.critical,
-    this.updated,
-  });
+  const Country(
+      {this.name,
+      this.cases,
+      this.todayDeaths,
+      this.todayCases,
+      this.deaths,
+      this.recovered,
+      this.todayRecovered,
+      this.active,
+      this.critical,
+      this.updated,
+      this.flag});
 
   factory Country.fromJson(Map<String, dynamic> json) => Country(
         name: json['country'],
@@ -36,6 +36,7 @@ class Country extends Equatable {
         todayRecovered: json['todayRecovered'],
         active: json['active'],
         critical: json['critical'],
+        flag: json['countryInfo']['flag'] ?? '',
       );
 
   @override

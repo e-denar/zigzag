@@ -65,7 +65,11 @@ class _MasterState extends State<Master> {
                                 LeftPageRoute(
                                   widget: Details(
                                       continents: continents.data,
-                                      selected: index),
+                                      selected: index,
+                                      offset:
+                                          MediaQuery.of(context).size.height *
+                                              0.6 *
+                                              index),
                                 ),
                               );
                             });

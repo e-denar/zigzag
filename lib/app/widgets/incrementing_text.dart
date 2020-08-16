@@ -4,7 +4,7 @@ class IncrementingText extends ImplicitlyAnimatedWidget {
   IncrementingText(
       {Key key,
       this.count = 0,
-      Duration duration = const Duration(milliseconds: 200),
+      Duration duration = const Duration(milliseconds: 1200),
       Curve curve = Curves.easeIn,
       this.style})
       : super(duration: duration, curve: curve, key: key);

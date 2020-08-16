@@ -8,7 +8,6 @@ import 'package:zigzag/app/widgets/incrementing_text.dart';
 import 'package:zigzag/app/widgets/moving_widget.dart';
 import 'package:zigzag/data/repositories/covid_repository.dart';
 import 'package:zigzag/domain/blocs/selected_country_bloc.dart';
-import 'package:zigzag/domain/blocs/theme_bloc.dart';
 
 class CountryHighlight extends StatefulWidget {
   @override
@@ -90,7 +89,7 @@ class _CountryHighlightState extends State<CountryHighlight> {
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
-                  fontSize: 48),
+                  fontSize: 55),
             ),
             Text(
               'Cases Today',
