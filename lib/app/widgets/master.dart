@@ -61,7 +61,13 @@ class _MasterState extends State<Master> {
                             continent: _continent,
                             onTap: () {
                               Navigator.push(
-                                  context, LeftPageRoute(widget: Details()));
+                                context,
+                                LeftPageRoute(
+                                  widget: Details(
+                                      continents: continents.data,
+                                      selected: index),
+                                ),
+                              );
                             });
                       });
                 }

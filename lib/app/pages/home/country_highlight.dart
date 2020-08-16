@@ -28,11 +28,6 @@ class _CountryHighlightState extends State<CountryHighlight> {
     _selected = bloc.selectedCountry;
   }
 
-  void _changeTheme() {
-    final themeBloc = Provider.of<ThemeBloc>(context, listen: false);
-    themeBloc.randomBgColor();
-  }
-
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<String>(
@@ -132,17 +127,14 @@ class _CountryHighlightState extends State<CountryHighlight> {
         alignment: Alignment.topCenter,
         child: Padding(
           padding: const EdgeInsets.all(16.0),
-          child: GestureDetector(
-            onTap: _changeTheme,
-            child: Text(
-              country.name,
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w300,
-                fontSize: 24,
-              ),
-              textAlign: TextAlign.center,
+          child: Text(
+            country.name,
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.w300,
+              fontSize: 24,
             ),
+            textAlign: TextAlign.center,
           ),
         ),
       ),

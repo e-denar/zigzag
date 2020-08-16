@@ -4,7 +4,7 @@ class ChangeViewWidget extends StatelessWidget {
   final color;
   final icon;
   final title;
-  final value;
+  final double value;
 
   const ChangeViewWidget({
     Key key,
@@ -33,9 +33,11 @@ class ChangeViewWidget extends StatelessWidget {
               ),
             ),
             Text(
-              isDecimal()
-                  ? '${value.toStringAsFixed(2)}%'
-                  : '${value.toStringAsFixed(1)}%',
+              (value.isNaN)
+                  ? 'No Data'
+                  : isDecimal()
+                      ? '${value.toStringAsFixed(2)}%'
+                      : '${value.toStringAsFixed(1)}%',
               style: TextStyle(
                   color: color, fontSize: 22, fontWeight: FontWeight.bold),
             ),

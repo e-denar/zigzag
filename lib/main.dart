@@ -26,31 +26,31 @@ class MyApp extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       stream: themeBloc.theme,
-      builder: (context, snapshot) => MaterialApp(
-        title: 'Zigzag Tech Exam',
-        debugShowCheckedModeBanner: false,
-        theme: snapshot.data,
-        home: MultiProvider(
-          providers: [
-            Provider.value(
-              value: themeBloc,
-              child: HomePage(),
-            ),
-            Provider<CovidRepository>.value(
-                value: CovidRepository(client: apiClient)),
-            Provider<ContinentBloc>(
-              create: (_) =>
-                  ContinentBloc(repo: CovidRepository(client: apiClient)),
-            ),
-            Provider<CountryBloc>(
-              create: (_) =>
-                  CountryBloc(repo: CovidRepository(client: apiClient)),
-            ),
-            Provider(
-              create: (_) => SelectedCountryBloc(),
-            )
-          ],
-          child: HomePage(),
+      builder: (context, snapshot) => MultiProvider(
+        providers: [
+          Provider.value(
+            value: themeBloc,
+            child: HomePage(),
+          ),
+          Provider<CovidRepository>.value(
+              value: CovidRepository(client: apiClient)),
+          Provider<ContinentBloc>(
+            create: (_) =>
+                ContinentBloc(repo: CovidRepository(client: apiClient)),
+          ),
+          Provider<CountryBloc>(
+            create: (_) =>
+                CountryBloc(repo: CovidRepository(client: apiClient)),
+          ),
+          Provider(
+            create: (_) => SelectedCountryBloc(),
+          )
+        ],
+        child: MaterialApp(
+          title: 'Zigzag Tech Exam',
+          debugShowCheckedModeBanner: false,
+          theme: snapshot.data,
+          home: HomePage(),
         ),
       ),
     );

@@ -51,4 +51,7 @@ class Country extends Equatable {
         critical,
         updated
       ];
+  double get casesIncreasedBy => (todayCases / cases) * 100;
+  double get deathsIncreasedBy => (todayDeaths / deaths) * 100;
+  double get recoveriesIncreasedBy => (todayRecovered / recovered) * 100;
 }

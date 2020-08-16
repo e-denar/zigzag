@@ -3,10 +3,16 @@ import 'dart:async';
 import 'package:zigzag/domain/blocs/bloc.dart';
 
 class SelectedCountryBloc extends Bloc {
-  final StreamController<String> _selected = StreamController<String>();
+  final StreamController<String> _selected =
+      StreamController<String>.broadcast();
   String defaultSelected = 'Philippines';
 
+  String currentSelected;
+
   SelectedCountryBloc() {
+    _selected.stream.listen((event) {
+      currentSelected = event;
+    });
     selectCountry(defaultSelected);
   }
 

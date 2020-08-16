@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zigzag/domain/entities/continent.dart';
 
+import 'change_summary.dart';
 import 'change_view_widget.dart';
 
 class ContinentTile extends StatelessWidget {
@@ -29,28 +30,10 @@ class ContinentTile extends StatelessWidget {
                 )
               ],
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                ChangeViewWidget(
-                  value: continent.casesIncreasedBy,
-                  title: 'Cases',
-                  icon: Icons.add_circle,
-                  color: Color.fromRGBO(255, 165, 0, 1),
-                ),
-                ChangeViewWidget(
-                  value: continent.casesIncreasedBy,
-                  title: 'Recoveries',
-                  icon: Icons.favorite,
-                  color: Colors.green,
-                ),
-                ChangeViewWidget(
-                  value: continent.deathsIncreasedBy,
-                  title: 'Deaths',
-                  icon: Icons.remove_circle,
-                  color: Color.fromRGBO(255, 27, 7, 1),
-                ),
-              ],
+            ChangeSummary(
+              cases: continent.casesIncreasedBy,
+              deaths: continent.deathsIncreasedBy,
+              recoveries: continent.recoveriesIncreasedBy,
             )
           ],
         ),

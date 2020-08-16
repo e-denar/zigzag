@@ -10,8 +10,8 @@ class CountryBloc extends Bloc {
   CovidRepository repo;
 
   final StreamController<Country> _country = StreamController<Country>();
-  final StreamController<List<Country>> _countries =
-      StreamController<List<Country>>();
+  final StreamController<Map<String, Country>> countriesController =
+      StreamController<Map<String, Country>>.broadcast();
   final StreamController<CountryBlocState> _state =
       StreamController<CountryBlocState>.broadcast();
 
@@ -25,7 +25,7 @@ class CountryBloc extends Bloc {
   }
 
   Stream<Country> get country => _country.stream;
-  Stream<List<Country>> get countries => _countries.stream;
+  Stream<Map<String, Country>> get countries => countriesController.stream;
   Stream<CountryBlocState> get state => _state.stream;
   CountryBlocState get currentState => _currentState;
 
@@ -35,9 +35,9 @@ class CountryBloc extends Bloc {
         .then((countries) => countries.forEach((country) {
               _data.putIfAbsent(country.name, () => country);
             }))
-        .whenComplete(() {
+        .whenComplete(() async {
       _state.sink.add(CountryBlocState.LOADED);
-      fetchCountries();
+      await fetchCountries();
     });
   }
 
@@ -50,8 +50,8 @@ class CountryBloc extends Bloc {
     });
   }
 
-  Future<void> fetchCountries() async {
-    _countries.sink.add(_data.values.toList());
+  Future<void> fetchCountries({List<String> names}) async {
+    countriesController.sink.add(_data);
   }
 
   Future<void> fetchSpecificCountry(String name) async {
@@ -66,7 +66,7 @@ class CountryBloc extends Bloc {
   @override
   void dispose() {
     _country.close();
-    _countries.close();
+    countriesController.close();
     _state.close();
   }
 }
