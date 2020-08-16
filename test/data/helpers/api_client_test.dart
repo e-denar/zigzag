@@ -18,6 +18,7 @@ void main() {
 
       when(mock.get('$baseURL/$someURL')).thenAnswer(
           (_) => Future.value(http.Response(mockData.toString(), OK_RESPONSE)));
+
       expect(await client.fetchJson(someURL), {'someData': 'someData'});
     });
 

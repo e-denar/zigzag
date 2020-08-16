@@ -42,7 +42,7 @@ class ContinentTile extends StatelessWidget {
                   value: continent.casesIncreasedBy,
                   title: 'Recoveries',
                   icon: Icons.favorite,
-                  color: Color.fromRGBO(102, 255, 0, 1),
+                  color: Colors.green,
                 ),
                 ChangeViewWidget(
                   value: continent.deathsIncreasedBy,

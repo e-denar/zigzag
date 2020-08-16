@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:zigzag/domain/blocs/country_bloc.dart';
 
 import 'package:zigzag/domain/entities/country.dart';
 import 'package:zigzag/app/widgets/incrementing_text.dart';
@@ -17,12 +18,13 @@ class CountryHighlight extends StatefulWidget {
 class _CountryHighlightState extends State<CountryHighlight> {
   Stream<String> _selected;
   CovidRepository repo;
+  CountryBloc _bloc;
 
   @override
   void initState() {
     super.initState();
     final bloc = Provider.of<SelectedCountryBloc>(context, listen: false);
-    repo = Provider.of<CovidRepository>(context, listen: false);
+    _bloc = Provider.of<CountryBloc>(context, listen: false);
     _selected = bloc.selectedCountry;
   }
 
@@ -34,29 +36,31 @@ class _CountryHighlightState extends State<CountryHighlight> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<String>(
-      initialData: 'Philippines',
-      stream: _selected,
-      builder: (context, selected) => FutureBuilder<Country>(
-        initialData: Country(name: selected.data, cases: 0, todayCases: 0),
-        future: repo.requestSpecificCountry(country: selected.data),
-        builder: (context, snapshot) {
-          final country = snapshot.data;
-          return AnimatedContainer(
-            duration: Duration(milliseconds: 200),
-            height: MediaQuery.of(context).size.height * 0.3,
-            child: Stack(
-              children: [
-                Positioned.fill(child: Container()),
-                _title(country),
-                _info(),
-                _cases(country),
-                _covidIcon(),
-              ],
-            ),
+        initialData: 'Philippines',
+        stream: _selected,
+        builder: (context, selected) {
+          _bloc.fetchSpecificCountry(selected.data);
+          return StreamBuilder<Country>(
+            initialData: Country(name: selected.data, cases: 0, todayCases: 0),
+            stream: _bloc.country,
+            builder: (context, snapshot) {
+              final country = snapshot.data;
+              return AnimatedContainer(
+                duration: Duration(milliseconds: 200),
+                height: MediaQuery.of(context).size.height * 0.3,
+                child: Stack(
+                  children: [
+                    Positioned.fill(child: Container()),
+                    _title(country),
+                    _info(),
+                    _cases(country),
+                    _covidIcon(),
+                  ],
+                ),
+              );
+            },
           );
-        },
-      ),
-    );
+        });
   }
 
   MovingWidget _covidIcon() {
